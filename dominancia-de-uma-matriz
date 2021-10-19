@@ -1,0 +1,40 @@
+import numpy as np
+
+n = int(input())
+arr = np.array([])
+
+for i in range(n):
+    for j in range(n):
+        x = float(input())
+        arr = np.append(arr, x)
+
+arr = np.reshape(arr, (n, n))
+
+u = np.copy(arr)
+
+d = np.diag(np.abs(arr))
+s = np.sum(np.abs(arr), axis=1) - d
+
+if np.all(d > s):
+    print('a matriz possui dominancia.')
+else:
+    for i in range(n):
+        if abs(arr[i][i]) > sum(arr[i]):
+            continue
+        else:
+            for j in range(n):
+                if max(arr[i]) == arr[i][j]:
+                    arr[[i, j]] = arr[[j, i]]
+
+    d = np.diag(np.abs(arr))
+    s = np.sum(np.abs(arr), axis=1) - d
+
+    if np.all(d > s):
+        print('a matriz possui dominancia se trocar linhas:')
+        for z in range(n):
+            for j in range(n):
+                if list(u[z]) == list(arr[j]):
+                    print(f"L{z} vai para L{j}")
+    else:
+        print('a matriz nao possui dominancia, mesmo se trocar linhas.')
+
